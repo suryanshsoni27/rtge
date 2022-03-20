@@ -1,0 +1,23 @@
+{
+  "name": "rtge",
+  "version": "1.0.0",
+  "description": "Rooms to go engineering",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suryanshsoni27/rtge.git"
+  },
+  "author": "Suryansh Soni",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/suryanshsoni27/rtge/issues"
+  },
+  "homepage": "https://github.com/suryanshsoni27/rtge#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "mongodb": "^4.4.1"
+  }
+}
