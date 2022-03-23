@@ -1,12 +1,22 @@
+/*
+Author - Suryansh Soni
+date started - 03/21/2022
+date finised - 03/22/2022
+*/
+
+
+//Requires repl for running the read evaluation print loop 
 const repl = require("repl");
 
-
+//WAREHOUSE DATA STRUCTURE IN FORM OF DICTIONARY
 var warehouses = {
 }
 
+//PRODUCT CATLOG DATA STRUCTURE IN FORM OF DICTIONARY
 var catlog = {
 
 }
+//Generates random name for the warehouse
 function makeNameForWarehouse() {
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -15,8 +25,11 @@ function makeNameForWarehouse() {
     return text;
 }
 
+
+
+//ADD PRODUCT FUNCTION
 function addProduct(productName,sku) {   
-    if(sku in catlog){
+    if(sku.replace(' ','') in catlog){
         console.log(`ERROR EXISTING PRODUCT, PRODUCT WITH SKU ${sku} ALREADY EXISTS`)
         return 
     }
@@ -25,6 +38,8 @@ function addProduct(productName,sku) {
     }
     
 }
+
+//ADD WAREHOUSE FUNCTION 
 function addWarehouse(uInput=Number.MAX_SAFE_INTEGER,warehouses) {
     if(uInput in warehouses){
         console.log(`ERROR ADDING WAREHOUSE, WAREHOUSE WITH NUMBER ${uInput} ALREADY EXISTS`)
@@ -38,6 +53,8 @@ function addWarehouse(uInput=Number.MAX_SAFE_INTEGER,warehouses) {
     }
 
 }
+
+//STOCK FUNCTION
 function stock(sku,warehousenumber,quantity) {
     let productTobeAdded = {}
     productTobeAdded['sku'] = sku;
@@ -46,16 +63,19 @@ function stock(sku,warehousenumber,quantity) {
     warehouses[warehousenumber]['product'][sku] = productTobeAdded
 }
 
+//UNSTOCK FUNCTION 
 function unstock(sku,warehousesnumber,quantityTobeRemoved) {
-    let currentQuantity = warehouses[warehousesnumber]['product'][sku]['quantity']
+    const warehouse = warehouses[parseInt(warehousesnumber)]
+    let currentQuantity = warehouse['product'][sku]['quantity']
     const updatedQuantity = (currentQuantity - parseInt(quantityTobeRemoved)) > 0?currentQuantity - parseInt(quantityTobeRemoved):0;
     let updatedProductTobeAdded = {}
     updatedProductTobeAdded[sku] = sku
     updatedProductTobeAdded['name'] = catlog[sku]
     updatedProductTobeAdded['quantity'] = updatedQuantity
-    warehouses[warehousenumber]['product'][sku] = updatedProductTobeAdded
+    warehouses[warehousesnumber]['product'][sku] = updatedProductTobeAdded
 }
 
+//LIST PRODUCTS FUNCTION
 function listProducts() {
     let skus = Object.keys(catlog)
     skus.forEach((sku)=>{
@@ -63,6 +83,8 @@ function listProducts() {
     })
     
 }
+
+//LIST WAREHOUSES FUNCTION
 function listWarehouses() {
     let warehouse = Object.keys(warehouses)
     console.log("WAREHOUSES")
@@ -70,6 +92,8 @@ function listWarehouses() {
     
 }
 
+
+//LIST WAREHOUSE FUNCTION
 function listWarehouse(warehousenumber) {
     var obj = warehouses[parseInt(warehousenumber)]['product'];
     console.log(warehouses[parseInt(warehousenumber)])
@@ -78,22 +102,17 @@ function listWarehouse(warehousenumber) {
         console.log(obj[key].name + "              "+key)
         console.log(obj[key].quantity)
     });
-    
-    // warehouses[parseInt(warehousenumber)]['product'].forEach((k)=>{
-    //     console.log(k.name + "              "+k.sku)
-    //     console.log(k.quantity)
-    // })
 }
 
 
 
-
+//REPL function 
 function checkFunction(uInput,datastore) {
     const request = uInput.split(" ")
     if((request[0] + request[1]) == "ADDWAREHOUSE") {
         addWarehouse(request[2],warehouses);
     }
-    if((request[0] + request[1]) == "ADDPRODUCT") {
+    else if((request[0] + request[1]) == "ADDPRODUCT") {
         const nameOfProduct = uInput
             .match(/(?:"[^"]*"|^[^"]*$)/)[0]
             .replace(/"/g, "")
@@ -117,6 +136,9 @@ function checkFunction(uInput,datastore) {
     else if(request[0] == "UNSTOCK") {
         console.log(request)
         unstock(request[1],request[2],request[3])
+    }
+    else{
+        console.log("Invalid Request")
     }
 
 
