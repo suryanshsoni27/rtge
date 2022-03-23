@@ -15,9 +15,5 @@
   "bugs": {
     "url": "https://github.com/suryanshsoni27/rtge/issues"
   },
-  "homepage": "https://github.com/suryanshsoni27/rtge#readme",
-  "dependencies": {
-    "express": "^4.17.3",
-    "mongodb": "^4.4.1"
-  }
+  "homepage": "https://github.com/suryanshsoni27/rtge#readme"
 }
